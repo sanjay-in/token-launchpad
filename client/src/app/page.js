@@ -1,5 +1,4 @@
-import { Main } from "./pages/Main";
-import Image from "next/image";
+import { Main } from "./index.jsx";
 
 export default function Home() {
   return (
