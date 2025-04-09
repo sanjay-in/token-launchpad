@@ -13,6 +13,7 @@ contract TestTokenLaunchpad is Test {
     string public symbol = "TT";
     string public image =
         "https://media.istockphoto.com/id/1268510010/vector/golden-one-token-coin-icon.jpg?s=612x612&w=0&k=20&c=rQ7yWnMEBFy8jUcjCjqa48-1ARmflM6aIn9svQ1En8E=";
+    string public description = "Hello! This is a new TOKEN!!";
 
     function setUp() external {
         DeployTokenLaunchpad deployTokenLaunchpad = new DeployTokenLaunchpad();
@@ -27,7 +28,7 @@ contract TestTokenLaunchpad is Test {
 
     function testCreateToken() external {
         vm.deal(msg.sender, 10);
-        tokenLaunchpad.create{value: 0.002 ether}(name, symbol, image);
+        tokenLaunchpad.create{value: 0.002 ether}(name, symbol, image, description);
 
         address[] memory tokenAddresses = tokenLaunchpad.getTokenAddresses();
         TokenLaunchPad.TokenDetails memory createdToken = tokenLaunchpad.getTokenDetails(tokenAddresses[0]);
@@ -36,6 +37,7 @@ contract TestTokenLaunchpad is Test {
         assertEq(createdToken.name, name);
         assertEq(createdToken.token, tokenAddresses[0]);
         assertEq(createdToken.imageUrl, image);
+        assertEq(createdToken.description, description);
         assertEq(createdToken.sold, 0);
         assertEq(createdToken.raised, 0);
         assertEq(createdToken.isOpen, true);
@@ -43,7 +45,7 @@ contract TestTokenLaunchpad is Test {
 
     function testRevertIfEthNotPaidForCreation() external {
         vm.expectRevert(TokenLaunchPad.TokenLaunchPad__AmountLessThanFee.selector);
-        tokenLaunchpad.create(name, symbol, image);
+        tokenLaunchpad.create(name, symbol, image, description);
     }
 
     function testErrorForUnlistedTokenBuy() external {
@@ -55,7 +57,7 @@ contract TestTokenLaunchpad is Test {
 
     function testErrorForSaleClosedInBuy() external {
         vm.deal(msg.sender, 100);
-        tokenLaunchpad.create{value: 0.002 ether}(name, symbol, image);
+        tokenLaunchpad.create{value: 0.002 ether}(name, symbol, image, description);
 
         address[] memory tokens = tokenLaunchpad.getTokenAddresses();
         address token = tokens[0];
@@ -73,7 +75,7 @@ contract TestTokenLaunchpad is Test {
 
     function testErrorForNotEnoughSupplyInBuy() external {
         vm.deal(msg.sender, 100);
-        tokenLaunchpad.create{value: 0.002 ether}(name, symbol, image);
+        tokenLaunchpad.create{value: 0.002 ether}(name, symbol, image, description);
 
         address[] memory tokens = tokenLaunchpad.getTokenAddresses();
         address token = tokens[0];
@@ -85,7 +87,7 @@ contract TestTokenLaunchpad is Test {
 
     function testErrorInsufficientETHInBuy() external {
         vm.deal(msg.sender, 100);
-        tokenLaunchpad.create{value: 0.002 ether}(name, symbol, image);
+        tokenLaunchpad.create{value: 0.002 ether}(name, symbol, image, description);
 
         address[] memory tokens = tokenLaunchpad.getTokenAddresses();
         address token = tokens[0];
@@ -97,7 +99,7 @@ contract TestTokenLaunchpad is Test {
 
     function testBuyEvent() external {
         vm.deal(msg.sender, 100);
-        tokenLaunchpad.create{value: 0.002 ether}(name, symbol, image);
+        tokenLaunchpad.create{value: 0.002 ether}(name, symbol, image, description);
 
         address[] memory tokens = tokenLaunchpad.getTokenAddresses();
         address token = tokens[0];
