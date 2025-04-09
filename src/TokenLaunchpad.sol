@@ -19,6 +19,7 @@ contract TokenLaunchPad {
         string name;
         address creator;
         string imageUrl;
+        string description;
         uint256 sold;
         uint256 raised;
         bool isOpen;
@@ -53,15 +54,20 @@ contract TokenLaunchPad {
      * @param _name of the token
      * @param _symbol of the token
      * @param _imageUrl of the token
+     * @param _description of the token
      */
-    function create(string memory _name, string memory _symbol, string memory _imageUrl) external payable {
+    function create(string memory _name, string memory _symbol, string memory _imageUrl, string memory _description)
+        external
+        payable
+    {
         if (msg.value < s_fee) {
             revert TokenLaunchPad__AmountLessThanFee();
         }
 
         Token token = new Token(_name, _symbol, INIT_SUPPLY);
         s_tokenAddresses.push(address(token)); // Add token address to array
-        TokenDetails memory detail = TokenDetails(address(token), _name, msg.sender, _imageUrl, 0, 0, true);
+        TokenDetails memory detail =
+            TokenDetails(address(token), _name, msg.sender, _imageUrl, _description, 0, 0, true);
         s_tokenToDetails[address(token)] = detail;
 
         emit Created(address(token));
