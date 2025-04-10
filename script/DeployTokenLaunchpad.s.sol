@@ -7,7 +7,9 @@ import {TokenLaunchPad} from "../src/TokenLaunchpad.sol";
 
 contract DeployTokenLaunchpad is Script {
     function run() external returns (TokenLaunchPad) {
+        vm.startBroadcast();
         TokenLaunchPad tokenLaunchpad = new TokenLaunchPad(1 * 10 ** 15);
+        vm.stopBroadcast();
         return tokenLaunchpad;
     }
 }
