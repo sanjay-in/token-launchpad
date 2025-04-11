@@ -1,6 +1,10 @@
 "use client";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { Contract, ethers } from "ethers";
+import { CONTRACT_ADDRESS, ABI } from "../../../constants/constants";
+import Loading from "../components/Loading";
+import Modal from "../components/Modal";
 
 export default () => {
   const router = useRouter();
@@ -10,13 +14,43 @@ export default () => {
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
 
+  const [isCreating, setIsCreating] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+
+  const createToken = async (e) => {
+    e.preventDefault();
+    setIsCreating(true);
+    try {
+      if (window.ethereum) {
+        console.log("entered");
+        const provider = new ethers.BrowserProvider(window.ethereum);
+        const signer = await provider.getSigner();
+        const tokenContract = new Contract(CONTRACT_ADDRESS, ABI, signer);
+        const fee = await tokenContract.s_fee();
+        const createTokenResponse = await tokenContract.create(name, ticker, image, description, { value: fee });
+        const createTokenReceipt = await createTokenResponse.wait();
+        if (createTokenReceipt.status == 1) {
+          setIsSuccess(true);
+        }
+      } else {
+        console.log("no window ethereum");
+      }
+    } catch (error) {
+      console.log("error:", error);
+      setIsError(true);
+    }
+    setIsCreating(false);
+  };
+
   return (
     <div className="create-token">
       <div className="start-coin" onClick={() => router.back()}>
         [go back]
       </div>
       <div className="form">
-        <form className="max-w-sm mx-auto">
+        <form className="max-w-sm mx-auto" onSubmit={(e) => createToken(e)}>
           <div className="mb-5">
             <label htmlFor="text" className="block mb-2 text-sm font-medium dark:text-white form-label">
               name
@@ -72,12 +106,14 @@ export default () => {
           </div>
           <button
             type="submit"
-            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 form-button"
+            className="create-button text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 form-button"
+            disabled={isCreating}
           >
-            Submit
+            {isCreating ? <Loading /> : "Create Token"}
           </button>
         </form>
       </div>
+      <Modal type={isError ? "error" : "success"} show={showModal} closeModal={setShowModal} />
     </div>
   );
 };
