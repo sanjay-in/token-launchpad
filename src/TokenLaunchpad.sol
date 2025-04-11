@@ -216,10 +216,12 @@ contract TokenLaunchPad {
      * @notice Gets token details array of all listed tokens
      * @return tokenDetails array of TokenDetails
      */
-    function getTokens() external view returns (TokenDetails[] memory tokenDetails) {
+    function getTokens() external view returns (TokenDetails[] memory) {
+        TokenDetails[] memory tokenDetails = new TokenDetails[](s_tokenAddresses.length);
         for (uint256 i = 0; i < s_tokenAddresses.length; i++) {
             tokenDetails[i] = s_tokenToDetails[s_tokenAddresses[i]];
         }
+        return tokenDetails;
     }
 
     /**
