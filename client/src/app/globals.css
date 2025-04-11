@@ -5,6 +5,8 @@
   --foreground: #171717;
   --font: #ffff;
   --button: rgb(134 239 172);
+  --light-text: rgba(134, 239, 173, 0.5);
+  --error-text: rgba(255, 83, 83, 0.617);
 }
 
 @theme inline {
@@ -81,6 +83,11 @@ body {
   margin: 0% 2%;
   border-radius: 10%;
   color: black;
+}
+
+.search-button:hover {
+  color: white;
+  cursor: pointer;
 }
 
 .cardlist {
@@ -224,4 +231,95 @@ nav {
   border: 1px solid rgb(0, 175, 0);
   cursor: pointer;
   background-color: rgb(0, 175, 0);
+}
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  gap: 1rem;
+}
+
+.loading-text {
+  color: var(--light-text);
+}
+
+.loading-tokens {
+  position: fixed;
+  top: 60%;
+  left: 50%;
+  translate: calc(-50%);
+}
+
+.empty-list {
+  position: fixed;
+  top: 60%;
+  left: 50%;
+  translate: calc(-50%);
+  color: var(--light-text);
+}
+
+.error-retry {
+  color: var(--error-text);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  position: fixed;
+  top: 60%;
+  left: 50%;
+  translate: calc(-50%);
+}
+
+.error-retry > button {
+  width: 10rem;
+}
+
+.error-retry > button:hover {
+  cursor: pointer;
+  background-color: rgba(255, 0, 0, 0.25);
+}
+
+.create-button {
+  height: 3rem;
+  cursor: pointer;
+}
+
+.modal-body {
+  background-color: var(--background);
+  color: white;
+}
+
+.modal-body-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.modal-body-symbol {
+  width: 3rem;
+}
+
+.success-text-header {
+  color: var(--button);
+}
+
+.error-text-header {
+  color: var(--error-text);
+}
+
+.modal-close-button {
+  background-color: gray;
+  box-shadow: none;
+}
+
+.modal-close-button:hover {
+  color: white;
+  cursor: pointer;
 }
