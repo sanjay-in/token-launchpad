@@ -27,7 +27,7 @@ export default function Navbar() {
     <nav className="bg-gray-800 navbar">
       <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
         {isWalletConnected ? (
-          <div className="wallet-address">{walletAddress ? trimAddress(walletAddress) : null}</div>
+          <div className="wallet-address">Wallet Address: {walletAddress ? trimAddress(walletAddress) : null}</div>
         ) : (
           <button
             type="button"
