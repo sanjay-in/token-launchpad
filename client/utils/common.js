@@ -12,7 +12,9 @@ export const connectWallet = async () => {
   }
 };
 
-export const trimAddress = (address) => {
-  const maskedAddress = address.substring(0, 12) + "..." + address.substring(address.length - 5, address.length);
+export const trimAddress = (address, startTrimIndex, endTrimIndex) => {
+  let trimStartIndex = startTrimIndex ? startTrimIndex : 0;
+  let trimEndIndex = endTrimIndex ? endTrimIndex : 12;
+  const maskedAddress = address.substring(trimStartIndex, trimEndIndex) + "..." + address.substring(address.length - 5, address.length);
   return maskedAddress;
 };
