@@ -20,6 +20,7 @@ export default () => {
   });
 
   let fundingGoal;
+  let fundingRaised;
   let fundingRaisedPercentage = 0;
   let totalSupplyPercentage;
   let initialSupply;
@@ -36,14 +37,15 @@ export default () => {
         console.log(fetchedToken);
         if (fetchedToken && fetchedToken.length) {
           [tokenAddress, name, creator, imageUrl, description, sold, raised, isOpen] = fetchedToken;
+          fundingRaised = parseInt(raised);
           setToken({
             token: tokenAddress,
             name,
             creator,
             imageUrl,
             description,
-            sold,
-            raised,
+            sold: parseInt(sold),
+            raised: parseInt(raised),
             isOpen,
           });
           return 1;
@@ -71,16 +73,10 @@ export default () => {
   };
 
   const getDetails = async () => {
-    const getTokenDetailsRes = await getTokenDetails();
-    if (getTokenDetailsRes) {
-      console.log("token.name", token);
-    }
+    await getTokenDetails();
     await getFundingDetails();
-    fundingRaisedPercentage = (token.raised / fundingGoal) * 100;
-
-    console.log("token.raised", token.raised);
-    console.log("fundingGoal", fundingGoal);
-    totalSupplyPercentage = ((parseFloat(totalSupply) - initialSupply) / ethers.formatUnits(totalSupply - initialSupply, "ether")) * 100;
+    fundingRaisedPercentage = (fundingRaised / fundingGoal) * 100;
+    totalSupplyPercentage = ((totalSupply - initialSupply) / ethers.formatUnits(totalSupply - initialSupply, "ether")) * 100;
   };
 
   useEffect(() => {
@@ -123,7 +119,7 @@ export default () => {
         <div className="details-container">
           <div className="details-content">
             <span className="details-content-heading">Bonding Curve Progress:</span>
-            0/24 ETH
+            {token.sold}/24 ETH
           </div>
           <div className="progress-bar">
             <div className="progress" style={{ width: `${fundingRaisedPercentage}%` }}></div>
