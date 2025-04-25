@@ -22,8 +22,8 @@ export const CardList = ({ loading, error, tokenDetails }) => {
             {tokenDetails.map((token) => {
               const [tokenAddress, name, creator, image, description, sold, raised, isOpen] = token;
               return (
-                <Link href={`/token-details?token=${tokenAddress}`}>
-                  <Card key={tokenAddress} name={name} description={description} creator={creator} />
+                <Link key={tokenAddress} href={`/token-details?token=${tokenAddress}`}>
+                  <Card key={tokenAddress} name={name} description={description} creator={creator} image={image} sold={sold} />
                 </Link>
               );
             })}
