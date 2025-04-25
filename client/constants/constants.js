@@ -1,4 +1,4 @@
-export const CONTRACT_ADDRESS = "0x5615dEB798BB3E4dFa0139dFa1b3D433Cc23b72f";
+export const CONTRACT_ADDRESS = "0x24925DFC46252aBDeaF5460b326941485f7d74Bc";
 
 export const ABI = [
   { type: "constructor", inputs: [{ name: "_fee", type: "uint256", internalType: "uint256" }], stateMutability: "nonpayable" },
@@ -112,7 +112,7 @@ export const ABI = [
     inputs: [],
     outputs: [
       {
-        name: "tokenDetails",
+        name: "",
         type: "tuple[]",
         internalType: "struct TokenLaunchPad.TokenDetails[]",
         components: [
@@ -127,6 +127,13 @@ export const ABI = [
         ],
       },
     ],
+    stateMutability: "view",
+  },
+  {
+    type: "function",
+    name: "getTotalSupply",
+    inputs: [{ name: "_token", type: "address", internalType: "address" }],
+    outputs: [{ name: "", type: "uint256", internalType: "uint256" }],
     stateMutability: "view",
   },
   {
