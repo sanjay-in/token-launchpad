@@ -19,7 +19,7 @@ export const Main = () => {
     } else {
       const filteredValue = tokenDetails.filter((data) => {
         const [tokenAddress, name, creator, image, description, sold, raised, isOpen] = data;
-        return name.includes(searchValue);
+        return name.toLowerCase().includes(searchValue.toLowerCase());
       });
       setFilteredTokens(filteredValue);
     }
