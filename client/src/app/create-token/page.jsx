@@ -13,35 +13,65 @@ export default () => {
   const [ticker, setTicker] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
+  const [imageURL, setImageURL] = useState("");
 
   const [isCreating, setIsCreating] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [isError, setIsError] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
+  const uploadImage = async (file) => {
+    if (file === null) {
+      console.error("Please select an image");
+      return;
+    }
+    try {
+      const data = new FormData();
+      data.append("file", file);
+      data.append("upload_preset", process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET);
+      data.append("cloud_name", process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME);
+      const fetchedResponse = await fetch(`https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`, {
+        method: "post",
+        body: data,
+      });
+      const jsonResponse = await fetchedResponse.json();
+      setImageURL(jsonResponse.url);
+    } catch (error) {
+      console.error(err);
+    }
+  };
+
+  const handleImageUpload = async (e) => {
+    setImage(e.target.files[0]);
+    await uploadImage(e.target.files[0]);
+  };
+
   const createToken = async (e) => {
     e.preventDefault();
     setIsCreating(true);
     try {
       if (window.ethereum) {
-        console.log("entered");
         const provider = new ethers.BrowserProvider(window.ethereum);
         const signer = await provider.getSigner();
         const tokenContract = new Contract(CONTRACT_ADDRESS, ABI, signer);
         const fee = await tokenContract.s_fee();
-        const createTokenResponse = await tokenContract.create(name, ticker, image, description, { value: fee });
+        const createTokenResponse = await tokenContract.create(name, ticker, imageURL, description, { value: fee });
         const createTokenReceipt = await createTokenResponse.wait();
         if (createTokenReceipt.status == 1) {
           setIsSuccess(true);
+          setIsCreating(false);
+          setShowModal(true);
         }
       } else {
-        console.log("no window ethereum");
+        console.error("no window ethereum");
+        setIsCreating(false);
       }
     } catch (error) {
-      console.log("error:", error);
+      console.error("error:", error);
       setIsError(true);
+      setIsCreating(false);
+      setShowModal(true);
     }
-    setIsCreating(false);
   };
 
   return (
@@ -98,8 +128,7 @@ export default () => {
               id="img"
               name="img"
               accept="image/*"
-              value={image}
-              onChange={(e) => setImage(e.target.value)}
+              onChange={(e) => handleImageUpload(e)}
               className="bg-black-200 border border-gray-300 text-white-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               required
             />
