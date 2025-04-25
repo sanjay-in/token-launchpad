@@ -61,7 +61,7 @@ body {
   top: 26%;
   left: 50%;
   translate: calc(-50%);
-  width: 70%;
+  width: 30%;
 }
 
 .searchbar > form {
@@ -94,6 +94,7 @@ body {
   position: absolute;
   top: 40%;
   margin: 2% 3%;
+  width: 94%;
 }
 
 .trending {
@@ -105,7 +106,12 @@ body {
 .card-elements {
   display: flex;
   width: 26rem;
-  margin: 0% 2% 2% 0%;
+  margin: 0% 5% 10% 0%;
+}
+
+.card-elements:hover {
+  cursor: pointer;
+  transform: scale(1.03);
 }
 
 .card-img {
@@ -117,6 +123,7 @@ body {
 .cardlist-container {
   display: flex;
   flex-wrap: wrap;
+  gap: 5%;
 }
 
 .info-container {
@@ -199,6 +206,7 @@ nav {
 
 .details-image {
   height: 12rem;
+  margin-bottom: 2rem;
 }
 
 .details-content {
@@ -211,26 +219,43 @@ nav {
   margin-right: 1rem;
 }
 
+.details-content-value {
+  font-weight: 500;
+  margin: 0;
+}
+
+.details-content-bonding-curve-description {
+  margin-bottom: 2.5rem;
+}
+
+.buy-tokens-heading {
+  margin: 1.5rem 0;
+  font-weight: 600;
+}
+
 .token-quantity-field {
-  background-color: rgb(83, 83, 83);
+  background-color: var(--background);
   padding: 1%;
+  width: 20rem;
   margin-bottom: 2rem;
   border-radius: 3px;
   border: 1px solid white;
 }
 
 .purchase-button {
-  background-color: rgb(0, 200, 0);
+  background-color: var(--button);
   padding: 0.7rem;
   border-radius: 5px;
   border: 1px solid rgb(0, 200, 0);
-  color: whitesmoke;
+  color: black;
 }
 
 .purchase-button:hover {
-  border: 1px solid rgb(0, 175, 0);
+  /* border: 1px solid rgb(0, 175, 0);
   cursor: pointer;
-  background-color: rgb(0, 175, 0);
+  background-color: rgb(0, 175, 0); */
+  color: var(--font);
+  cursor: pointer;
 }
 
 .loading {
@@ -250,6 +275,13 @@ nav {
 .loading-tokens {
   position: fixed;
   top: 60%;
+  left: 50%;
+  translate: calc(-50%);
+}
+
+.loading-token-details {
+  position: fixed;
+  top: 50%;
   left: 50%;
   translate: calc(-50%);
 }
@@ -322,4 +354,39 @@ nav {
 .modal-close-button:hover {
   color: white;
   cursor: pointer;
+}
+
+.progress-bars {
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.progress-container {
+  margin-bottom: 20px;
+}
+
+.progress-bar {
+  width: 100%;
+  background-color: rgb(50, 52, 65);
+  border-radius: 4px;
+  height: 20px;
+  margin: 10px 0;
+}
+
+.progress {
+  height: 100%;
+  background-color: rgb(134, 239, 172);
+  border-radius: 4px;
+}
+
+.uploading-image-spinner {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  gap: 0.2rem;
+  font-size: 0.8rem;
+  position: absolute;
+  top: 77%;
+  left: 63%;
+  color: slategray;
 }
