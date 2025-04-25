@@ -51,6 +51,7 @@ export default () => {
         let tokenAddress, name, creator, imageUrl, description, sold, raised, isOpen;
         if (fetchedToken && fetchedToken.length) {
           [tokenAddress, name, creator, imageUrl, description, sold, raised, isOpen] = fetchedToken;
+          console.log(fetchedToken);
           setToken({
             token: tokenAddress,
             name,

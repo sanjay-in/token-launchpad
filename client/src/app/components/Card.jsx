@@ -4,7 +4,7 @@ import { trimAddress } from "../../../utils/common";
 export default ({ name, description, creator, image, sold }) => {
   return (
     <div className="card-elements">
-      <img src={image} className="card-img" />
+      <img className="card-img" src={image} />
       <div className="info-container">
         <div className="createdby">created by {trimAddress(creator, 0, 11)}</div>
         <div className="market-cap">sold tokens {sold.toLocaleString()}</div>
