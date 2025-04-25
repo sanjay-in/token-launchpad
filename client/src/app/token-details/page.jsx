@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { BrowserProvider, Contract, ethers } from "ethers";
 import { ABI, CONTRACT_ADDRESS } from "../../../constants/constants";
 import BuyConfirmationModal from "../components/BuyConfirmationModal";
@@ -8,9 +8,9 @@ import Loading from "../components/Loading";
 import ImageNotAvailable from "../../../public/Image_not_available.png";
 
 export default () => {
-  const params = useSearchParams();
   const router = useRouter();
-  const paramsTokenAddress = params.get("token");
+
+  const [paramsTokenAddress, setParamsTokenAddress] = useState(null);
 
   const [token, setToken] = useState({
     token: 0,
@@ -127,6 +127,8 @@ export default () => {
 
   useEffect(() => {
     setIsLoading(true);
+    const params = new URLSearchParams(window.location.search);
+    setParamsTokenAddress(params.get("token"));
 
     if (isFirstRender) {
       getDetails();
