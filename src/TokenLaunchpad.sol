@@ -230,4 +230,13 @@ contract TokenLaunchPad {
     function getTokenAddresses() external view returns (address[] memory) {
         return s_tokenAddresses;
     }
+
+    /**
+     * @notice Returns the total supply of the token
+     * @param _token address of the token
+     */
+    function getTotalSupply(address _token) external view returns (uint256) {
+        Token token = Token(_token);
+        return token.totalSupply();
+    }
 }
