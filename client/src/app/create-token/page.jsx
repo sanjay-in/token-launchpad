@@ -164,9 +164,9 @@ export default () => {
                 fill="currentFill"
               />
             </svg>
-            <span class="sr-only">Loading...</span>
+            <span className="sr-only">Loading...</span>
           </div>
-        ) : typeof image == "string" && !isUploadingImage ? (
+        ) : imageURL.length && !isUploadingImage ? (
           <li className="flex items-center uploading-image-spinner">
             Image Uploaded
             <svg

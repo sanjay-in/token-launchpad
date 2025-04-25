@@ -10,8 +10,6 @@ import ImageNotAvailable from "../../../public/Image_not_available.png";
 export default () => {
   const router = useRouter();
 
-  const [paramsTokenAddress, setParamsTokenAddress] = useState(null);
-
   const [token, setToken] = useState({
     token: 0,
     name: "",
@@ -40,7 +38,7 @@ export default () => {
     totalSupply: 0,
   });
 
-  const getTokenDetails = async () => {
+  const getTokenDetails = async (paramsTokenAddress) => {
     try {
       if (window.ethereum) {
         const provider = new ethers.BrowserProvider(window.ethereum);
@@ -51,7 +49,6 @@ export default () => {
         let tokenAddress, name, creator, imageUrl, description, sold, raised, isOpen;
         if (fetchedToken && fetchedToken.length) {
           [tokenAddress, name, creator, imageUrl, description, sold, raised, isOpen] = fetchedToken;
-          console.log(fetchedToken);
           setToken({
             token: tokenAddress,
             name,
@@ -97,8 +94,8 @@ export default () => {
     }
   };
 
-  const getDetails = async () => {
-    await getTokenDetails();
+  const getDetails = async (paramsTokenAddress) => {
+    await getTokenDetails(paramsTokenAddress);
     await getFundingDetails();
   };
 
@@ -128,10 +125,10 @@ export default () => {
   useEffect(() => {
     setIsLoading(true);
     const params = new URLSearchParams(window.location.search);
-    setParamsTokenAddress(params.get("token"));
+    const paramsTokenAddress = params.get("token");
 
     if (isFirstRender) {
-      getDetails();
+      getDetails(paramsTokenAddress);
     }
     setIsFirstRender(false);
 
