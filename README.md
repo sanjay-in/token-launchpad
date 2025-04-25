@@ -1,66 +1,74 @@
-## Foundry
+# Token Launchpad
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+![image info](./client/public/screenshot.png)
 
-Foundry consists of:
+## About the project
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+Token Launchpad is a decentralized application that is deployed on Sepolia Testnet where you can create a new token or memecoin and other users can participate in token presales. Once the token becomes king of the hill (either reaches a funding of 24 ETH or sells max supply of token) it enters Uniswap liquidity pool then can be traded. Some amount of token is reserved already during the creation of token for liquidity.
 
-## Documentation
+## Getting Started
 
-https://book.getfoundry.sh/
+To get a local copy up and running, please follow these simple steps.
 
-## Usage
+**Prerequisites**
 
-### Build
+Here is what you need to be able to run.
 
-```shell
-$ forge build
-```
+- Node.js (Version: >=18.x)
+- Next.js (version:>=15.2.x)
+- Foundry
 
-### Test
+## Development
 
-```shell
-$ forge test
-```
+**Setup**
 
-### Format
+1. Clone the repo.
 
-```shell
-$ forge fmt
-```
+   ```shell
+   git clone https://github.com/sanjay-in/token-launchpad.git
+   ```
 
-### Gas Snapshots
+2. Run local anvil node
 
-```shell
-$ forge snapshot
-```
+   ```shell
+   anvil
+   ```
 
-### Anvil
+3. Run deploy script in new window
 
-```shell
-$ anvil
-```
+   ```shell
+   forge script script/DeployTokenLaunchpad.s.sol --rpc-url <anvil_local_url> --private-key <anvil_deployer_private_key> --broadcast
+   ```
 
-### Deploy
+   > _The <anvil_local_url> and <anvil_deployer_private_key> can be found in anvil node. Use the first anvil private key for <anvil_deployer_private_key>_
 
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
+**Start client**
 
-### Cast
+1. Open new window
+   ```shell
+   cd client
+   ```
+2. Install dependencies
+   ```shell
+   npm i
+   ```
+3. Start development client server
+   ```shell
+   npm run dev
+   ```
+4. Create constant.js in constant folder and add
 
-```shell
-$ cast <subcommand>
-```
+   ```shell
+   export const CONTRACT_ADDRESS = <contract_address>
+   export const ABI = <contract_ABI>
+   ```
 
-### Help
+5. Add Cloudinary values to .env file
+   ```shell
+    NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET=<preset_name>
+    NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=<cloud_name>
+   ```
 
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+## License
+
+Distributed under the MIT License. See LICENSE for more information.
