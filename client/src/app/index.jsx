@@ -37,7 +37,6 @@ export const Main = () => {
           setTokenDetails(tokens);
           setFilteredTokens(tokens);
         }
-        console.log("tokens", tokens);
       }
     } catch (error) {
       console.log(error);
@@ -48,6 +47,9 @@ export const Main = () => {
 
   useEffect(() => {
     getAllTokens();
+    window.ethereum?.on("accountsChanged", () => {
+      window.location.reload("/");
+    });
   }, []);
   return (
     <div>
