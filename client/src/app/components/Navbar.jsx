@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { connectWallet, trimAddress } from "../../../utils/common";
+import HeaderImage from "../../../public/header.png";
 
 export default function Navbar() {
   const [isWalletConnected, setIsWalletConnected] = useState(false);
@@ -37,6 +38,7 @@ export default function Navbar() {
           </button>
         )}
       </div>
+      <img className="header" src={HeaderImage.src} />
     </nav>
   );
 }
