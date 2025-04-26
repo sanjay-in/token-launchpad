@@ -390,3 +390,10 @@ nav {
   left: 63%;
   color: slategray;
 }
+
+.header {
+  position: absolute;
+  height: 2rem;
+  left: 2%;
+  top: 2.5%;
+}
