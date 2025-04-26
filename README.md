@@ -1,10 +1,12 @@
-# Token Launchpad
+# Catapult
 
-![image info](./client/public/screenshot.png)
+![image info](./client/public/logo-header.png)
+![image info](./client/public/screenshot1.png)
 
 ## About the project
 
-Token Launchpad is a decentralized application that is deployed on Sepolia Testnet where you can create a new token or memecoin and other users can participate in token presales. Once the token becomes king of the hill (either reaches a funding of 24 ETH or sells max supply of token) it enters Uniswap liquidity pool then can be traded. Some amount of token is reserved already during the creation of token for liquidity.
+Catapult is a token launchpad, a decentralized application that is deployed on Sepolia Testnet where you can create a new token or memecoin and other users can participate in token presales. Once the token becomes king of the hill (either reaches a funding of 24 ETH or sells max supply of token) it enters Uniswap liquidity pool then can be traded. Some amount of token is reserved already during the creation of token for liquidity.
+![image info](./client/public/screenshot2.png)
 
 ## Getting Started
 
